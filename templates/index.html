@@ -1,40 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>URL Shortener</title>
+  <meta charset="UTF-8">
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align: center; padding-top: 40px;">
+<body>
+  <div class="container">
     <h1>🔗 URL Shortener</h1>
-
-    <form method="POST">
-        <input type="text" name="original_url" placeholder="Enter a long URL" style="width: 300px;" required>
-        <input type="submit" value="Shorten">
+    
+    <form action="/" method="POST">
+      <input type="url" name="long_url" placeholder="Enter your long URL" required>
+      
+      <input type="text" name="custom_code" placeholder="Custom short code (optional)">
+      
+      <button type="submit">Shorten</button>
     </form>
 
-    {% if message %}
-    {% if '❌' in message %}
-        <p style="color: red;">{{ message }}</p>
-    {% else %}
-        <p style="color: green;">{{ message }}</p>
-    {% endif %}
-{% endif %}
-
     {% if short_url %}
-        <p>Shortened URL:</p>
-        <input type="text" id="shortUrl" value="{{ short_url }}" readonly style="width: 300px;">
-        <button onclick="copyURL()">📋 Copy</button>
-        <p id="copyMsg" style="color: green;"></p>
+    <div class="result">
+      <p>Short URL:</p>
+      <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+    </div>
     {% endif %}
-
-    <p><a href="/analytics">📊 View Analytics</a></p>
-
-    <script>
-        function copyURL() {
-            const copyText = document.getElementById("shortUrl");
-            copyText.select();
-            document.execCommand("copy");
-            document.getElementById("copyMsg").innerText = "✅ Copied to clipboard!";
-        }
-    </script>
+  </div>
 </body>
 </html>
+
