@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Shortener</title>
+</head>
+<body style="text-align: center; padding-top: 40px;">
+    <h1>🔗 URL Shortener</h1>
+
+    <form method="POST">
+        <input type="text" name="original_url" placeholder="Enter a long URL" style="width: 300px;" required>
+        <input type="submit" value="Shorten">
+    </form>
+
+    {% if message %}
+    {% if '❌' in message %}
+        <p style="color: red;">{{ message }}</p>
+    {% else %}
+        <p style="color: green;">{{ message }}</p>
+    {% endif %}
+{% endif %}
+
+    {% if short_url %}
+        <p>Shortened URL:</p>
+        <input type="text" id="shortUrl" value="{{ short_url }}" readonly style="width: 300px;">
+        <button onclick="copyURL()">📋 Copy</button>
+        <p id="copyMsg" style="color: green;"></p>
+    {% endif %}
+
+    <p><a href="/analytics">📊 View Analytics</a></p>
+
+    <script>
+        function copyURL() {
+            const copyText = document.getElementById("shortUrl");
+            copyText.select();
+            document.execCommand("copy");
+            document.getElementById("copyMsg").innerText = "✅ Copied to clipboard!";
+        }
+    </script>
+</body>
+</html>
