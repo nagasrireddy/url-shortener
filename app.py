@@ -1,59 +1,65 @@
-from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import Flask, render_template, request, redirect, url_for
 import string
 import random
+import sqlite3
+import os
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.db'
-db = SQLAlchemy(app)
+app = Flask(__name__, static_folder='static')
 
-class URL(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    original_url = db.Column(db.String(500), nullable=False)
-    short_code = db.Column(db.String(10), unique=True, nullable=False)
-    clicks = db.Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+# Ensure instance directory exists
+if not os.path.exists("instance"):
+    os.makedirs("instance")
 
-def generate_short_code(length=6):
+# Initialize SQLite database
+conn = sqlite3.connect('instance/urls.db', check_same_thread=False)
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS urls (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        original_url TEXT NOT NULL,
+        short_url TEXT NOT NULL UNIQUE,
+        visits INTEGER DEFAULT 0
+    )
+''')
+conn.commit()
+
+def generate_short_url(length=6):
     characters = string.ascii_letters + string.digits
     while True:
-        code = ''.join(random.choices(characters, k=length))
-        if not URL.query.filter_by(short_code=code).first():
-            return code
+        short_url = ''.join(random.choices(characters, k=length))
+        cursor.execute("SELECT * FROM urls WHERE short_url = ?", (short_url,))
+        if not cursor.fetchone():
+            return short_url
 
 @app.route('/', methods=['GET', 'POST'])
-def home():
-    message = ""
-    short_url = None
-
+def index():
     if request.method == 'POST':
-        original_url = request.form.get('original_url')
-        if not original_url:
-            message = "❌ Please enter a valid URL."
-        else:
-            short_code = generate_short_code()
-            new_url = URL(original_url=original_url, short_code=short_code)
-            db.session.add(new_url)
-            db.session.commit()
-            short_url = request.host_url + short_code
-            message = "✅ URL shortened successfully!"
+        original_url = request.form['original_url']
+        short_url = generate_short_url()
 
-    return render_template('index.html', short_url=short_url, message=message)
+        cursor.execute("INSERT INTO urls (original_url, short_url) VALUES (?, ?)",
+                       (original_url, short_url))
+        conn.commit()
 
-@app.route('/<short_code>')
-def redirect_to_original(short_code):
-    url = URL.query.filter_by(short_code=short_code).first_or_404()
-    url.clicks += 1
-    db.session.commit()
-    return redirect(url.original_url)
+        return render_template('index.html', short_url=short_url)
+    return render_template('index.html')
+
+@app.route('/<short_url>')
+def redirect_short_url(short_url):
+    cursor.execute("SELECT original_url, visits FROM urls WHERE short_url = ?", (short_url,))
+    result = cursor.fetchone()
+    if result:
+        original_url, visits = result
+        cursor.execute("UPDATE urls SET visits = ? WHERE short_url = ?", (visits + 1, short_url))
+        conn.commit()
+        return redirect(original_url)
+    return 'Invalid URL', 404
 
 @app.route('/analytics')
 def analytics():
-    urls = URL.query.all()
-    return render_template('analytics.html', urls=urls)
+    cursor.execute("SELECT original_url, short_url, visits FROM urls")
+    data = cursor.fetchall()
+    return render_template('analytics.html', data=data)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
