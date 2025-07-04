@@ -15,7 +15,7 @@ A simple and efficient URL shortener built with **Flask** and **SQLite**, suppor
 ![Analytics Screenshot](https://github.com/nagasrireddy/url-shortener/assets/your-screenshot-id/analytics.png)
 
 _(Optional: Replace with your actual uploaded images or GIF)_
-
+.
 ---
 
 ## ✨ Features
