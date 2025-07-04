@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>URL Shortener</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -8,27 +9,34 @@
     <div class="container">
         <h1>🔗 URL Shortener</h1>
         <form method="POST">
-            <input type="text" name="original_url" placeholder="Enter a long URL" required>
+            <label for="original_url">Enter a long URL</label>
+            <input type="url" id="original_url" name="original_url" required>
             <button type="submit">Shorten</button>
         </form>
 
-        {% if short_url %}
-            <p class="success">✅ URL shortened successfully!</p>
-            <p><strong>Shortened URL:</strong></p>
+        {% if success %}
+            <div class="message success">
+                ✅ URL shortened successfully!
+            </div>
             <div class="result">
-                <input type="text" value="{{ request.host_url }}{{ short_url }}" readonly>
+                <label>Shortened URL:</label>
+                <input type="text" id="shortUrl" value="{{ shortened_url }}" readonly>
                 <button onclick="copyToClipboard()">📋 Copy</button>
             </div>
-            <br>
-            <a href="{{ url_for('analytics') }}">📊 View Analytics</a>
         {% endif %}
+
+        <div class="footer">
+            <a href="{{ url_for('analytics') }}">📊 View Analytics</a>
+        </div>
     </div>
 
     <script>
         function copyToClipboard() {
-            const input = document.querySelector('.result input');
-            input.select();
+            var copyText = document.getElementById("shortUrl");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
             document.execCommand("copy");
+            alert("Copied: " + copyText.value);
         }
     </script>
 </body>
