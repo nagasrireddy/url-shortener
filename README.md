@@ -2,14 +2,8 @@
 
 A clean and scalable URL shortener built using Flask, with built-in click tracking and analytics. This project mimics real-world systems like Bitly and TinyURL.
 
-[![Deploy on Render](https://img.shields.io/badge/Deploy-Render-blue?style=flat-square&logo=render)](https://url-shortener1-dqzy.onrender.com)
-[![GitHub stars](https://img.shields.io/github/stars/nagasrireddy/url-shortener?style=social)](https://github.com/nagasrireddy/url-shortener)
-
----
-
-## 🚀 Live Demo
-
-👉 [Live Project](https://url-shortener1-dqzy.onrender.com)
+> 🚀 **Live Demo**  
+👉 [https://url-shortener1-dqzy.onrender.com](https://url-shortener1-dqzy.onrender.com)
 
 ---
 
@@ -19,27 +13,33 @@ A clean and scalable URL shortener built using Flask, with built-in click tracki
 - 📈 Track visits & click count
 - 🖥️ Clean and responsive frontend
 - 🗂️ SQLite-based lightweight DB
-- 📊 Basic analytics dashboard
+- 📊 Analytics dashboard
 - 💾 Persistent storage
-- ⚙️ Ready for Docker, Redis & PostgreSQL integration
+- 🔒 Ready for Docker, Redis & PostgreSQL integration
 
 ---
 
 ## 🖼️ Screenshots
 
-| Home | Shorten Success | Analytics Dashboard |
-|------|------------------|---------------------|
-| ![Home](static/screenshots/home.png) | ![Shortened](static/screenshots/shorten-success.png) | ![Analytics](static/screenshots/analytics.png) |
+### 🔘 Home Page (URL Shortener)
+
+![Home Page](static/screenshots/home.png)
+
+---
+
+### 📊 Analytics Dashboard
+
+![Analytics Page](static/screenshots/analytics.png)
 
 ---
 
 ## 🧱 Tech Stack
 
 - **Frontend:** HTML, CSS, Jinja2
-- **Backend:** Flask (Python)
-- **Database:** SQLite (upgradable to PostgreSQL)
-- **Deployment:** Render
-- **Server:** Gunicorn
+- **Backend:** Flask
+- **Database:** SQLite (PostgreSQL coming soon)
+- **Deployment:** Render (Free Tier)
+- **WSGI Server:** Gunicorn
 
 ---
 
@@ -52,16 +52,13 @@ cd url-shortener
 
 # Create virtual environment
 python -m venv venv
-# Activate it
-# On Windows:
-venv\Scripts\activate
-# On Linux/Mac:
-source venv/bin/activate
+source venv/bin/activate      # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Run the app
 python app.py
+
 
 
