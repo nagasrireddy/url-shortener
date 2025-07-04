@@ -2,8 +2,7 @@
 
 A clean and scalable URL shortener built using Flask, with built-in click tracking and analytics. This project mimics real-world systems like Bitly and TinyURL.
 
-> 🚀 **Live Demo**  
-👉 [https://url-shortener1-dqzy.onrender.com](https://url-shortener1-dqzy.onrender.com)
+🌐 **Live Demo**: [Click here](https://url-shortener1-dqzy.onrender.com)
 
 ---
 
@@ -13,33 +12,29 @@ A clean and scalable URL shortener built using Flask, with built-in click tracki
 - 📈 Track visits & click count
 - 🖥️ Clean and responsive frontend
 - 🗂️ SQLite-based lightweight DB
-- 📊 Analytics dashboard
+- 📊 Basic analytics dashboard
 - 💾 Persistent storage
-- 🔒 Ready for Docker, Redis & PostgreSQL integration
+- ⚙️ Ready for Docker, Redis & PostgreSQL integration
 
 ---
 
 ## 🖼️ Screenshots
 
-### 🔘 Home Page (URL Shortener)
-
+### 🔘 Home Page (Shorten URL)
 ![Home Page](static/screenshots/home.png)
 
----
-
 ### 📊 Analytics Dashboard
-
 ![Analytics Page](static/screenshots/analytics.png)
 
 ---
 
 ## 🧱 Tech Stack
 
-- **Frontend:** HTML, CSS, Jinja2
-- **Backend:** Flask
-- **Database:** SQLite (PostgreSQL coming soon)
-- **Deployment:** Render (Free Tier)
-- **WSGI Server:** Gunicorn
+- **Frontend**: HTML, CSS, Jinja2
+- **Backend**: Flask
+- **Database**: SQLite (soon PostgreSQL)
+- **Deployment**: Render
+- **WSGI Server**: Gunicorn
 
 ---
 
@@ -52,7 +47,7 @@ cd url-shortener
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate      # On Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
