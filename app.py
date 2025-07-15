@@ -231,5 +231,10 @@ with app.app_context():
     os.makedirs(db_dir, exist_ok=True)  # This creates the directory if it doesn't exist
     db.create_all()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+@app.route('/')
+def home():
+    return "URL Shortener Working!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8000)
