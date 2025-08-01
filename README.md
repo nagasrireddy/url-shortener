@@ -21,7 +21,7 @@ A clean and scalable URL shortener built using Flask, with built-in click tracki
 ## 🖼️ Screenshots
 
 ### 🔘 Home Page (Shorten URL)
-![Home Page](static/screenshots/home.png)
+![Home Page]("C:\Users\nagas\OneDrive\Pictures\Screenshots\Screenshot 2025-07-04 212131.png")
 
 ### 📊 Analytics Dashboard
 ![Analytics Page](static/screenshots/analytics.png)
